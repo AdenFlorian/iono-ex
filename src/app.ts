@@ -16,9 +16,17 @@ const playerShip = new Actor({
   color: Color.White,
 })
 
-const shipWidth = 30
+const shipScale = 1
+const shipWidth = 30 * shipScale
 const shipWidthHalf = shipWidth / 2
-const trianglePoints = [vec(-shipWidthHalf, 20), vec(0, -20), vec(shipWidthHalf, 20), vec(0, 10)]
+const shipHeight = 40 * shipScale
+const shipHeightHalf = shipHeight / 2
+const trianglePoints = [
+  vec(-shipWidthHalf, shipHeightHalf),
+  vec(0, -shipHeightHalf),
+  vec(shipWidthHalf, shipHeightHalf),
+  vec(0, shipHeightHalf / 2),
+]
 const triangleGraphic = new Polygon({
   points: trianglePoints,
   color: Color.Transparent,
