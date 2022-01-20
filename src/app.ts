@@ -1,4 +1,7 @@
-import { Actor, Color, Engine, vec, Input, Polygon, Screen, Vector, ActorArgs } from 'excalibur'
+import {
+  Actor, Color, Engine, vec, Input,
+  Polygon, Vector, ActorArgs, DisplayMode
+} from 'excalibur'
 
 const actor = new Actor()
 
@@ -6,6 +9,7 @@ const game = new Engine({
   width: 800,
   height: 600,
   backgroundColor: Color.Black,
+  displayMode: DisplayMode.Fixed
 });
 
 game.screen.antialiasing = true;
@@ -60,6 +64,29 @@ ships.forEach(x => {
   game.add(x)
 })
 
+const shipThrusterVisual = new Actor({
+  x: 0,
+  y: 23,
+})
+
+playerShip.addChild(shipThrusterVisual)
+
+const thrusterPoints = [
+  vec(-shipWidthHalf / 2, -10),
+  vec(0, -15),
+  vec(shipWidthHalf / 2, -10),
+  vec(0, shipHeightHalf / 2),
+]
+const thrusterGraphic = new Polygon({
+  points: thrusterPoints,
+  color: Color.Transparent,
+  strokeColor: Color.White,
+  lineWidth: 2,
+  smoothing: true,
+})
+shipThrusterVisual.graphics.use(thrusterGraphic)
+shipThrusterVisual.graphics.visible = false
+
 const turnSpeed = 0.005
 const maxVel = 500
 const acceleration = 0.3
@@ -67,6 +94,9 @@ const acceleration = 0.3
 playerShip.on('postupdate', ({ delta }) => {
   if (game.input.keyboard.isHeld(Input.Keys.W)) {
     playerShip.body.vel = playerShip.body.vel.add(vec(0, -acceleration * delta).rotate(playerShip.body.rotation))
+    shipThrusterVisual.graphics.visible = true
+  } else {
+    shipThrusterVisual.graphics.visible = false
   }
   if (game.input.keyboard.isHeld(Input.Keys.A)) {
     playerShip.body.rotation -= turnSpeed * delta
