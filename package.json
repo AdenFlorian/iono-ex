@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "dependencies": {
+    "excalibur": "^0.25.1"
+  },
+  "devDependencies": {
+    "parcel": "latest"
+  }
+}
